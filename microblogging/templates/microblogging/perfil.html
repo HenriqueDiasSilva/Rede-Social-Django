@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil do Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<header>
+    <!-- Navbar -->
+    <div class="container">
+        <div class="row mt-2 mb-5">
+            <div class="col-8 d-flex align-items-end">
+                <h2>{{ colaborador.nome }}</h2>
+            </div>
+            {%if user != colaborador.usuario %}
+                <div class="col-1 d-flex align-items-center justify-content-end">
+                    <span><a href="{% url 'seguir' colaborador.usuario.username %}" class="text-decoration-none">
+                        {% if relacao %}
+                            Unfollow
+                        {% else %}
+                            Follow
+                        {% endif %}
+                    </a></span>
+                </div>
+            {% endif %}
+            <div class="col-1 d-flex align-items-center justify-content-end">
+                <span><a href="{% url 'index' %}" class="text-decoration-none">Inicio</a></span>
+            </div>
+            {%if user == colaborador.usuario %}
+            <div class="col-1 d-flex align-items-center justify-content-end">
+                <span><a href="{% url 'publicacao' %}" class="text-decoration-none">Publicar</a></span>
+            </div>
+            {% endif %}
+            <div class="col-1 d-flex d-flex align-items-center justify-content-center">
+                <span class="sair"><a href="{% url 'logout' %}" class="text-decoration-none">Sair</a></span>
+            </div>
+        </div>
+        </nav>
+    </div>
+</header>
+
+<body>
+    <!-- Publicações -->
+    <div class="container">
+        <ul>
+            {% for publicacao in publicacoes%}
+            <li>
+                <div class="row mt-2">
+                    <div class="col-9">
+                        <p class="text-primary"><a href="{% url 'comentarios' publicacao.id  %}"
+                                class="text-decoration-none">{{ publicacao.colaborador.nome }} - @{{publicacao.colaborador.usuario }}</a></p>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <p>{{ publicacao.data_de_publicacao }} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>{{ publicacao.texto}} </p>
+                </div>
+            </li>
+            {%endfor%}
+            </ol>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+<footer>
+    <!-- Rodapé -->
+    <div class="container mt-5">
+        <p>&copy; HD Solutions 2022</p>
+    </div>
+</footer>
+
+</html>
